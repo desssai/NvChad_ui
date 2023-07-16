@@ -89,16 +89,8 @@ M.open = function()
   local nvdash = api.nvim_create_namespace "nvdash"
   local horiz_pad_index = math.floor((api.nvim_win_get_width(win) / 2) - (nvdashWidth / 2)) - 2
 
-  -- for i = abc, abc + #header do
-  --   api.nvim_buf_add_highlight(buf, nvdash, "NvDashAscii", i, horiz_pad_index, -1)
-  -- end
-
-  -- for i = abc + #header - 2, abc + #dashboard do
-  --   api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", i, horiz_pad_index, -1)
-  -- end
-
-  api.nvim_win_set_cursor(win, { abc + #header, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
-  api.nvim_buf_set_extmark(buf, nvdash, abc, horiz_pad_index, {-1, "NvDashButton"})
+  api.nvim_win_set_cursor(win, { abc + #header, horiz_pad_index })
+  api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", abc + #header - 1, horiz_pad_index, -1)
 
   local first_btn_line = abc + #header + 2
   local keybind_lineNrs = {}
@@ -118,15 +110,19 @@ M.open = function()
   vim.keymap.set("n", "k", function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[1] and keybind_lineNrs[#keybind_lineNrs] or cur - 2
-    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
-    api.nvim_buf_set_extmark(buf, nvdash, target_line, horiz_pad_index, {-1, "NvDashButton"})
+
+    api.nvim_win_set_cursor(win, { target_line, horiz_pad_index })
+    api.nvim_buf_clear_namespace(buf, nvdash, abc + #header - 2, abc + #header + #dashboard)
+    api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", target_line - 1, horiz_pad_index, -1)
   end, { buffer = true })
 
   vim.keymap.set("n", "j", function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[#keybind_lineNrs] and keybind_lineNrs[1] or cur + 2
-    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
-    api.nvim_buf_set_extmark(buf, nvdash, target_line, horiz_pad_index, {-1, "NvDashButton"})
+
+    api.nvim_win_set_cursor(win, { target_line, horiz_pad_index })
+    api.nvim_buf_clear_namespace(buf, nvdash, abc + #header - 2, abc + #header + #dashboard)
+    api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", target_line - 1, horiz_pad_index, -1)
   end, { buffer = true })
 
   -- pressing enter on
