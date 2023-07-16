@@ -117,13 +117,13 @@ M.open = function()
   vim.keymap.set("n", "k", function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[1] and keybind_lineNrs[#keybind_lineNrs] or cur - 2
-    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) - 13 })
+    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
   end, { buffer = true })
 
   vim.keymap.set("n", "j", function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[#keybind_lineNrs] and keybind_lineNrs[1] or cur + 2
-    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) - 13 })
+    api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
   end, { buffer = true })
 
   -- pressing enter on
