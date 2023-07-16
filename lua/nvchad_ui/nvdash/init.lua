@@ -89,9 +89,9 @@ M.open = function()
   local nvdash = api.nvim_create_namespace "nvdash"
   local horiz_pad_index = math.floor((api.nvim_win_get_width(win) / 2) - (nvdashWidth / 2)) - 2
 
-  for i = abc, abc + #header do
-    api.nvim_buf_add_highlight(buf, nvdash, "NvDashAscii", i, horiz_pad_index, -1)
-  end
+  -- for i = abc, abc + #header do
+  --   api.nvim_buf_add_highlight(buf, nvdash, "NvDashAscii", i, horiz_pad_index, -1)
+  -- end
 
   for i = abc + #header - 2, abc + #dashboard do
     api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", i, horiz_pad_index, -1)
