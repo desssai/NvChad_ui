@@ -97,7 +97,8 @@ M.open = function()
   --   api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", i, horiz_pad_index, -1)
   -- end
 
-  -- api.nvim_win_set_cursor(win, { abc + #header, math.floor(vim.o.columns / 2 + vim.o.columns % 2) - 13 })
+  api.nvim_win_set_cursor(win, { abc + #header, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
+  api.nvim_buf_set_extmark(buf, nvdash, abc, horiz_pad_index, -1, "NvDashButton")
 
   local first_btn_line = abc + #header + 2
   local keybind_lineNrs = {}
@@ -118,14 +119,14 @@ M.open = function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[1] and keybind_lineNrs[#keybind_lineNrs] or cur - 2
     api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
-    api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", target_line, horiz_pad_index, -1)
+    api.nvim_buf_set_extmark(buf, nvdash, target_line, horiz_pad_index, -1, "NvDashButton")
   end, { buffer = true })
 
   vim.keymap.set("n", "j", function()
     local cur = fn.line "."
     local target_line = cur == keybind_lineNrs[#keybind_lineNrs] and keybind_lineNrs[1] or cur + 2
     api.nvim_win_set_cursor(win, { target_line, math.floor(vim.o.columns / 2 + vim.o.columns % 2) })
-    api.nvim_buf_add_highlight(buf, nvdash, "NvDashButtons", target_line, horiz_pad_index, -1)
+    api.nvim_buf_set_extmark(buf, nvdash, target_line, horiz_pad_index, -1, "NvDashButton")
   end, { buffer = true })
 
   -- pressing enter on
